@@ -1,4 +1,4 @@
-package de.slg.it;
+package de.slg.it.datastructure;
 
 /**
  * DecisionTree.

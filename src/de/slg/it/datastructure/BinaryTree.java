@@ -1,18 +1,18 @@
-package de.slg.it;
+package de.slg.it.datastructure;
 
 /**
  * <p>
  * Materialien zu den zentralen NRW-Abiturpruefungen im Fach Informatik ab 2018
  * </p>
  * <p>
- * Generische Klasse de.slg.it.BinaryTree<ContentType>
+ * Generische Klasse de.slg.it.datastructure.BinaryTree<ContentType>
  * </p>
  * <p>
- * Mithilfe der generischen Klasse de.slg.it.BinaryTree koennen beliebig viele
+ * Mithilfe der generischen Klasse de.slg.it.datastructure.BinaryTree koennen beliebig viele
  * Inhaltsobjekte vom Typ ContentType in einem Binaerbaum verwaltet werden. Ein
  * Objekt der Klasse stellt entweder einen leeren Baum dar oder verwaltet ein
  * Inhaltsobjekt sowie einen linken und einen rechten Teilbaum, die ebenfalls
- * Objekte der generischen Klasse de.slg.it.BinaryTree sind.
+ * Objekte der generischen Klasse de.slg.it.datastructure.BinaryTree sind.
  * </p>
  *
  * @author Qualitaets- und UnterstuetzungsAgentur - Landesinstitut fuer Schule
@@ -83,9 +83,9 @@ public class BinaryTree<ContentType> {
      * @param pContent
      *            das Inhaltsobjekt des Wurzelknotens vom Typ ContentType
      * @param pLeftTree
-     *            der linke Teilbaum vom Typ de.slg.it.BinaryTree<ContentType>
+     *            der linke Teilbaum vom Typ de.slg.it.datastructure.BinaryTree<ContentType>
      * @param pRightTree
-     *            der rechte Teilbaum vom Typ de.slg.it.BinaryTree<ContentType>
+     *            der rechte Teilbaum vom Typ de.slg.it.datastructure.BinaryTree<ContentType>
      */
     public BinaryTree(ContentType pContent, BinaryTree<ContentType> pLeftTree, BinaryTree<ContentType> pRightTree) {
         if (pContent != null) {
@@ -155,10 +155,10 @@ public class BinaryTree<ContentType> {
     /**
      * Falls der Parameter null ist, geschieht nichts. Wenn der Binaerbaum leer
      * ist, wird pTree nicht angehaengt. Andernfalls erhaelt der Binaerbaum den
-     * uebergebenen de.slg.it.BinaryTree als linken Teilbaum.
+     * uebergebenen de.slg.it.datastructure.BinaryTree als linken Teilbaum.
      *
      * @param pTree
-     *            neuer linker Teilbaum vom Typ de.slg.it.BinaryTree<ContentType>
+     *            neuer linker Teilbaum vom Typ de.slg.it.datastructure.BinaryTree<ContentType>
      */
     public void setLeftTree(BinaryTree<ContentType> pTree) {
         if (!this.isEmpty() && pTree != null) {
@@ -169,10 +169,10 @@ public class BinaryTree<ContentType> {
     /**
      * Falls der Parameter null ist, geschieht nichts. Wenn der Binaerbaum leer
      * ist, wird pTree nicht angehaengt. Andernfalls erhaelt der Binaerbaum den
-     * uebergebenen de.slg.it.BinaryTree als rechten Teilbaum.
+     * uebergebenen de.slg.it.datastructure.BinaryTree als rechten Teilbaum.
      *
      * @param pTree
-     *            neuer linker Teilbaum vom Typ de.slg.it.BinaryTree<ContentType>
+     *            neuer linker Teilbaum vom Typ de.slg.it.datastructure.BinaryTree<ContentType>
      */
     public void setRightTree(BinaryTree<ContentType> pTree) {
         if (!this.isEmpty() && pTree != null) {
@@ -184,7 +184,7 @@ public class BinaryTree<ContentType> {
      * Diese Anfrage liefert den linken Teilbaum des Binaerbaumes. Wenn der
      * Binaerbaum leer ist, wird null zurueckgegeben.
      *
-     * @return linker Teilbaum vom Typ de.slg.it.BinaryTree<ContentType> oder null, wenn
+     * @return linker Teilbaum vom Typ de.slg.it.datastructure.BinaryTree<ContentType> oder null, wenn
      * der aktuelle Binaerbaum leer ist
      */
     public BinaryTree<ContentType> getLeftTree() {
@@ -199,7 +199,7 @@ public class BinaryTree<ContentType> {
      * Diese Anfrage liefert den rechten Teilbaum des Binaerbaumes. Wenn der
      * Binaerbaum (this) leer ist, wird null zurueckgegeben.
      *
-     * @return rechter Teilbaum vom Typ de.slg.it.BinaryTree<ContentType> oder null, wenn
+     * @return rechter Teilbaum vom Typ de.slg.it.datastructure.BinaryTree<ContentType> oder null, wenn
      * der aktuelle Binaerbaum (this) leer ist
      */
     public BinaryTree<ContentType> getRightTree() {
