@@ -20,7 +20,22 @@ public class DecisionTree extends BinaryTree<String> {
      */
     public DecisionTree(String tree) {
         super();
-        String[] nodes = tree.split("_;_");
+
+        if(tree.equals(""))
+            return;
+
+        String current = tree.substring(0, tree.indexOf("_;;_"));
+        setContent(current.substring(0, tree.indexOf("_;_")));
+
+        String left  = tree.substring(tree.indexOf("_;;_")+4);
+        String right = left.substring(tree.indexOf("_;;_")+4);
+
+        DecisionTree leftTree = new DecisionTree(left);
+        DecisionTree rightTree = new DecisionTree(right);
+
+        setLeftTree(leftTree);
+        setLeftTree(rightTree);
+
     }
 
     public DecisionTree getLeftTree() {
