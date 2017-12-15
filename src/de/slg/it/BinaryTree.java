@@ -18,6 +18,7 @@ package de.slg.it;
  * @author Qualitaets- und UnterstuetzungsAgentur - Landesinstitut fuer Schule
  * @version Generisch_03 2014-03-01
  */
+@SuppressWarnings("WeakerAccess")
 public class BinaryTree<ContentType> {
 
 	/* --------- Anfang der privaten inneren Klasse -------------- */
@@ -37,8 +38,8 @@ public class BinaryTree<ContentType> {
             // beide von null verschieden sind. Also hat ein Blatt immer zwei
             // leere Teilbaeume unter sich.
             this.content = pContent;
-            left = new BinaryTree<CT>();
-            right = new BinaryTree<CT>();
+            left = new BinaryTree<>();
+            right = new BinaryTree<>();
         }
 
     }
@@ -65,7 +66,7 @@ public class BinaryTree<ContentType> {
      */
     public BinaryTree(ContentType pContent) {
         if (pContent != null) {
-            this.node = new BTNode<ContentType>(pContent);
+            this.node = new BTNode<>(pContent);
         } else {
             this.node = null;
         }
@@ -88,16 +89,16 @@ public class BinaryTree<ContentType> {
      */
     public BinaryTree(ContentType pContent, BinaryTree<ContentType> pLeftTree, BinaryTree<ContentType> pRightTree) {
         if (pContent != null) {
-            this.node = new BTNode<ContentType>(pContent);
+            this.node = new BTNode<>(pContent);
             if (pLeftTree != null) {
                 this.node.left = pLeftTree;
             } else {
-                this.node.left = new BinaryTree<ContentType>();
+                this.node.left = new BinaryTree<>();
             }
             if (pRightTree != null) {
                 this.node.right = pRightTree;
             } else {
-                this.node.right = new BinaryTree<ContentType>();
+                this.node.right = new BinaryTree<>();
             }
         } else {
             // Da der Inhalt null ist, wird ein leerer BinarySearchTree erzeugt.
@@ -128,9 +129,9 @@ public class BinaryTree<ContentType> {
     public void setContent(ContentType pContent) {
         if (pContent != null) {
             if (this.isEmpty()) {
-                node = new BTNode<ContentType>(pContent);
-                this.node.left = new BinaryTree<ContentType>();
-                this.node.right = new BinaryTree<ContentType>();
+                node = new BTNode<>(pContent);
+                this.node.left = new BinaryTree<>();
+                this.node.right = new BinaryTree<>();
             }
             this.node.content = pContent;
         }

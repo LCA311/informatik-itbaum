@@ -6,7 +6,8 @@ package de.slg.it;
  * Subklasse von BinaryTree, um einige Methoden für den Entscheidungsbaum erweitert.
  *
  * @author Gianni
- * @version 0.1
+ * @since 0.1
+ * @version 2017.1512
  */
 public class DecisionTree extends BinaryTree<String> {
 
@@ -19,6 +20,7 @@ public class DecisionTree extends BinaryTree<String> {
      */
     public DecisionTree(String tree) {
         super();
+        String[] nodes = tree.split("_;_");
     }
 
     public DecisionTree getLeftTree() {
