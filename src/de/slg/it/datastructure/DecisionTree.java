@@ -34,7 +34,7 @@ public class DecisionTree extends BinaryTree<String> {
         DecisionTree rightTree = new DecisionTree(right);
 
         setLeftTree(leftTree);
-        setLeftTree(rightTree);
+        setRightTree(rightTree);
 
     }
 
