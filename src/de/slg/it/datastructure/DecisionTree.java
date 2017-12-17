@@ -46,11 +46,11 @@ public class DecisionTree extends BinaryTree<String> {
         return (DecisionTree) super.getRightTree();
     }
 
-    public void setLeftTree(DecisionTree tree) {
+    private void setLeftTree(DecisionTree tree) {
         super.setLeftTree(tree);
     }
 
-    public void setRightTree(DecisionTree tree) {
+    private void setRightTree(DecisionTree tree) {
         super.setRightTree(tree);
     }
 
