@@ -52,7 +52,7 @@ class Main {
 
         private String subject;
 
-        private Synchronizer(String subject) {
+        private SynchronizerDownstream(String subject) {
             this.subject = subject;
         }
 
