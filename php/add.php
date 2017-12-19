@@ -13,7 +13,7 @@
 	$thema = $db->real_escape_string($_GET['thema']);
 
 	$sql = "INSERT INTO Thema VALUES (null, '".$thema."') ON DUPLICATE KEY UPDATE name=name";
-	$sql2 = "INSERT INTO Nodes VALUES (null, '".$text."', ".$posX.", ".$posY.", (SELECT id FROM Thema WHERE name='".$thema."'))";
+	$sql2 = "INSERT INTO Nodes VALUES (null, '".$text."', ".$posX.", ".$posY.", (SELECT id FROM Thema WHERE name='".$thema."')) ON DUPLICATE KEY UPDATE posX=posX";
 
 	$result = $db->query($sql);
 
