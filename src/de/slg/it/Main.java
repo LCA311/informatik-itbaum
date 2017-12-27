@@ -32,7 +32,27 @@ class Main {
         decisionTreeMap = new Hashtable<>();
         syncTree(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
 
+        //START DEBUG
+
+        DecisionTree t = new DecisionTree("A_;_B_;_D_;_E_;_C_;_F_;_G");
+
+        System.out.println("checking:");
+
+        System.out.println(t.toString());
+
+        //END DEBUG
+
         new GUI(this);
+    }
+
+    /**
+     * Startet eine neue "Session" in der Fragen bzgl. des Problems beantwortet werden und gibt diese zurück.
+     * Bei jedem Start wird die Referenz der vorherigen Session verworfen.
+     *
+     * @param subject {@link Subject Thema} des Problems
+     */
+    Session startNewSession(String subject) {
+        return new Session(subject, decisionTreeMap);
     }
 
     /**
@@ -40,7 +60,6 @@ class Main {
      *
      * @param trees Bäume die aktualisiert werden sollen.
      */
-    //Wird später noch aus der GUI Klasse aufgerufen, daher nicht private
     void syncTree(String... trees) {
         for (String tree : trees) {
             Runnable cur = new SynchronizerDownstream(tree);

@@ -14,24 +14,36 @@ public class DecisionTree extends BinaryTree<String> {
     /**
      * Konstruktor.
      *
-     * Erstellt den Baum anhand eines Strings. Format des Strings: Inhalt_;_X_;_Y_;;_
+     * Erstellt den Baum anhand eines Strings. Format des Strings: Inhalt_;_
      *
      * @param tree Stringrepräsentation des Baums
      */
     public DecisionTree(String tree) {
         super();
 
-        if(tree.equals(""))
+        if(tree.equals("") || tree.equals("_;_"))
             return;
 
-        String current = tree.substring(0, tree.indexOf("_;;_"));
-        setContent(current.substring(0, tree.indexOf("_;_")));
+        String current = tree.substring(0, tree.indexOf("_;_"));
+        setContent(current);
 
-        String left  = tree.substring(tree.indexOf("_;;_")+4);
-        String right = left.substring(tree.indexOf("_;;_")+4);
+        tree = tree.substring(tree.indexOf("_;_")+3);
 
-        DecisionTree leftTree = new DecisionTree(left);
-        DecisionTree rightTree = new DecisionTree(right);
+        String[] components = tree.split("_;_");
+        int centerIndex = components.length/2;
+
+        StringBuilder left = new StringBuilder();
+        for (int i = 0; i < centerIndex; i++) {
+            left.append(components[i]).append("_;_");
+        }
+
+        StringBuilder right = new StringBuilder();
+        for (int i = centerIndex; i < components.length; i++) {
+            right.append(components[i]).append("_;_");
+        }
+
+        DecisionTree leftTree = new DecisionTree(left.toString());
+        DecisionTree rightTree = new DecisionTree(right.toString());
 
         setLeftTree(leftTree);
         setRightTree(rightTree);
@@ -55,17 +67,20 @@ public class DecisionTree extends BinaryTree<String> {
     }
 
     @Override
-    public String toString() {
-        return createStringRepresentation(0, 0);
-    }
-
     //preorder
-    private String createStringRepresentation(int x, int y) {
-        String current = getContent();
+    public String toString() {
 
-        return current+"_;_"+x+"_;_"+y+"_;;_"
-                + getLeftTree().createStringRepresentation(2*x, ++y)
-                + getRightTree().createStringRepresentation(2*x+1, ++y);
+        if(getContent() == null)
+            return "";
+
+        StringBuilder toString = new StringBuilder(getContent()).append("_;_");
+
+        if(getLeftTree() != null)
+            toString.append(getLeftTree().toString());
+        if(getRightTree() != null)
+            toString.append(getRightTree().toString());
+
+        return toString.toString();
     }
 
 }
