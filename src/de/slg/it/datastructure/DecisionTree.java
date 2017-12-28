@@ -1,5 +1,7 @@
 package de.slg.it.datastructure;
 
+import de.slg.it.utility.ProblemContent;
+
 /**
  * DecisionTree.
  *
@@ -9,37 +11,39 @@ package de.slg.it.datastructure;
  * @since 0.1
  * @version 2017.1512
  */
-public class DecisionTree extends BinaryTree<String> {
+public class DecisionTree extends BinaryTree<ProblemContent> {
 
     /**
      * Konstruktor.
      *
-     * Erstellt den Baum anhand eines Strings. Format des Strings: Inhalt_;_
+     * Erstellt den Baum anhand eines Strings. Format des Strings: Titel_;_Inhalt_;_Bildpfad_;;_ ...
      *
      * @param tree Stringrepräsentation des Baums
      */
     public DecisionTree(String tree) {
         super();
 
-        if(tree.equals("") || tree.equals("_;_"))
+        if(tree.equals("") || tree.equals("_;;_"))
             return;
 
-        String current = tree.substring(0, tree.indexOf("_;_"));
-        setContent(current);
+        String current = tree.substring(0, tree.indexOf("_;;_"));
+        String[] params = current.split("_;_");
 
-        tree = tree.substring(tree.indexOf("_;_")+3);
+        setContent(new ProblemContent(params[0], params[1], params[2]));
 
-        String[] components = tree.split("_;_");
+        tree = tree.substring(tree.indexOf("_;;_")+3);
+
+        String[] components = tree.split("_;;_");
         int centerIndex = components.length/2;
 
         StringBuilder left = new StringBuilder();
         for (int i = 0; i < centerIndex; i++) {
-            left.append(components[i]).append("_;_");
+            left.append(components[i]).append("_;;_");
         }
 
         StringBuilder right = new StringBuilder();
         for (int i = centerIndex; i < components.length; i++) {
-            right.append(components[i]).append("_;_");
+            right.append(components[i]).append("_;;_");
         }
 
         DecisionTree leftTree = new DecisionTree(left.toString());
@@ -73,7 +77,10 @@ public class DecisionTree extends BinaryTree<String> {
         if(getContent() == null)
             return "";
 
-        StringBuilder toString = new StringBuilder(getContent()).append("_;_");
+        ProblemContent content = getContent();
+
+        StringBuilder toString = new StringBuilder(content.title+"_;_"+content.description+"_;_"+content.pathToImage+"_;_")
+                .append("_;;_");
 
         if(getLeftTree() != null)
             toString.append(getLeftTree().toString());

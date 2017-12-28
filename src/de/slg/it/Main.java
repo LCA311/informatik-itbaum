@@ -32,16 +32,6 @@ class Main {
         decisionTreeMap = new Hashtable<>();
         syncTree(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
 
-        //START DEBUG
-
-        DecisionTree t = new DecisionTree("A_;_B_;_D_;_E_;_C_;_F_;_G");
-
-        System.out.println("checking:");
-
-        System.out.println(t.toString());
-
-        //END DEBUG
-
         new GUI(this);
     }
 

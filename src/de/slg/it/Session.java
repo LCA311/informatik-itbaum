@@ -18,12 +18,20 @@ class Session {
         return subject;
     }
 
-    String getQuestion() {
-        return current.getContent();
+    String getTitle() {
+        return current.getContent().title;
+    }
+
+    String getDescription() {
+        return current.getContent().description;
+    }
+
+    String getPath() {
+        return current.getContent().pathToImage;
     }
 
     boolean isAnswer() {
-        return current.getLeftTree() == null && current.getRightTree() == null;
+        return current.getLeftTree().getContent() == null && current.getRightTree().getContent() == null;
     }
 
     void answerYes() {
