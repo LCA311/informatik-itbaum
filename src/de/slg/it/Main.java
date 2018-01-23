@@ -1,6 +1,7 @@
 package de.slg.it;
 
 
+import de.slg.it.datastructure.DecisionTree;
 import de.slg.it.utility.Subject;
 
 import java.io.BufferedReader;
@@ -21,7 +22,7 @@ import java.util.Hashtable;
 @SuppressWarnings("WeakerAcess")
 class Main {
     //Hashtable ist Threadsafe
-    private Hashtable<String, de.slg.it.datastructure.DecisionTree> decisionTreeMap;
+    private Hashtable<String, DecisionTree> decisionTreeMap;
 
     /**
      * Konstruktor.
@@ -34,7 +35,12 @@ class Main {
         decisionTreeMap = new Hashtable<>();
         syncTree(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
         Main reference = this;
+        fillMissingTrees(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
         new GUI_project(reference);
+
+        //TODO HTTP Get == 200
+        //TODO an Baum
+
     }
 
     /**
@@ -86,7 +92,7 @@ class Main {
                 if(result.startsWith("-"))
                     return;
 
-                decisionTreeMap.put(subject, new de.slg.it.datastructure.DecisionTree(result));
+                decisionTreeMap.put(subject, new DecisionTree(result));
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -94,5 +100,17 @@ class Main {
         }
 
 
+
+
     }
+
+
+    private void fillMissingTrees(String... subjects) {
+        for (String cur : subjects) {
+            if (decisionTreeMap.get(cur) == null) {
+                decisionTreeMap.put(cur, new DecisionTree());
+            }
+        }
+    }
+
 }

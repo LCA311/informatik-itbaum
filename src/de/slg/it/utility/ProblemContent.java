@@ -9,6 +9,13 @@ public class ProblemContent {
     public ProblemContent(String title, String description, String pathToImage) {
         this.title = title;
         this.description = description;
-        this.pathToImage = pathToImage;
+        if (pathToImage != null)
+            this.pathToImage = pathToImage.equals("null") ? null : pathToImage;
+        else
+            this.pathToImage = pathToImage;
+    }
+    @Override
+    public String toString() {
+        return title + "_;_" + description + "_;_" + pathToImage;
     }
 }

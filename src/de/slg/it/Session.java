@@ -1,44 +1,49 @@
 package de.slg.it;
 
-
-
 import java.util.Hashtable;
 
-class Session {
+import de.slg.it.datastructure.DecisionTree;
 
-    private de.slg.it.datastructure.DecisionTree current;
+public class Session {
+
+    private DecisionTree current;
     private String subject;
 
-    Session(String subject, Hashtable<String, de.slg.it.datastructure.DecisionTree> selection) {
+    public Session(String subject, Hashtable<String, DecisionTree> selection) {
         current = selection.get(subject);
         this.subject = subject;
     }
 
-    String getSubject() {
+    public String getSubject() {
         return subject;
     }
 
-    String getTitle() {
+    public String getTitle() {
         return current.getContent().title;
     }
 
-    String getDescription() {
+    public String getDescription() {
         return current.getContent().description;
     }
 
-    String getPath() {
+    public String getPath() {
         return current.getContent().pathToImage;
     }
 
-    boolean isAnswer() {
-        return current.getLeftTree().getContent() == null && current.getRightTree().getContent() == null;
+    public boolean isAnswer() {
+        return !current.hasChildren();
     }
 
-    void answerYes() {
+    public boolean isAvailable() {
+        System.out.println(String.valueOf(current == null));
+        return !current.isEmpty();
+    }
+
+    public void answerYes() {
         current = current.getRightTree();
     }
 
-    void answerNo() {
+    public void answerNo() {
         current = current.getLeftTree();
     }
 

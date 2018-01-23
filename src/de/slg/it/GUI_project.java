@@ -1,5 +1,7 @@
 package de.slg.it;
 
+import de.slg.it.utility.Subject;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,7 +28,6 @@ public class GUI_project extends JFrame {
 
     //
     GUI_project(Main reference) {
-        //System.setProperty("swing.defaultlaf", "com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); //TODO
         this.setTitle("IT-Problemlöser");
         this.setSize(300, 400);
 
@@ -37,9 +38,10 @@ public class GUI_project extends JFrame {
 
         button1 = new JButton();
         button1.setBounds(190, 350, 90, 35);
-        button1.setForeground(new Color(0, 0, 0));
+        button1.setForeground(new Color(66, 143, 202));
+        button1.setBackground(new Color(255, 255, 255));
         button1.setEnabled(true);
-        button1.setFont(new Font("droidsans", 0, 12));
+        button1.setFont(new Font("raleway", Font.BOLD, 14));
         button1.setText("Ja");
         button1.setVisible(false);
         button1.addMouseListener(new MouseAdapter() {
@@ -50,9 +52,10 @@ public class GUI_project extends JFrame {
 
         button2 = new JButton();
         button2.setBounds(20, 350, 90, 35);
-        button2.setForeground(new Color(0, 0, 0));
+        button2.setForeground(new Color(66, 143, 202));
+        button2.setBackground(new Color(255, 255, 255));
         button2.setEnabled(true);
-        button2.setFont(new Font("droidsans", 0, 12));
+        button2.setFont(new Font("raleway", 1, 14));
         button2.setText("Nein");
         button2.setVisible(false);
         button2.addMouseListener(new MouseAdapter() {
@@ -65,66 +68,68 @@ public class GUI_project extends JFrame {
 
         button3 = new JButton();
         button3.setBounds(90, 100, 120, 35);
+        button3.setForeground(new Color(66, 143, 202));
+        button3.setBackground(new Color(255, 255, 255));
         button3.setEnabled(true);
-        button3.setFont(new Font("droidsans", 0, 12));
+        button3.setFont(new Font("raleway", 1, 14));
         button3.setText("Netzwerk");
         button3.setVisible(true);
 
         button3.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 System.out.println("Clicked: Netzwerk");
-                session = reference.startNewSession("NETZWERK");
+                session = reference.startNewSession(Subject.NETWORK);
                 subjectChosen();
             }
         });
 
         button4 = new JButton();
         button4.setBounds(90, 170, 120, 35);
-        button4.setForeground(new Color(0, 0, 0));
+        button4.setForeground(new Color(66, 143, 202));
+        button4.setBackground(new Color(255, 255, 255));
         button4.setEnabled(true);
-        button4.setFont(new Font("droidsans", 0, 12));
+        button4.setFont(new Font("raleway", 1, 14));
         button4.setText("Computer");
         button4.setVisible(true);
 
         button4.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 System.out.println("Clicked: Computer");
-                session = reference.startNewSession("COMPUTER");
+                session = reference.startNewSession(Subject.COMPUTER);
                 subjectChosen();
-
             }
         });
 
 
         button5 = new JButton();
         button5.setBounds(90, 240, 120, 35);
+        button5.setForeground(new Color(66, 143, 202));
+        button5.setBackground(new Color(255, 255, 255));
         button5.setEnabled(true);
-        button5.setFont(new Font("droidsans", 0, 12));
+        button5.setFont(new Font("raleway", 1, 14));
         button5.setText("Beamer");
         button5.setVisible(true);
 
         button5.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 System.out.println("Clicked: Beamer");
-                session = reference.startNewSession("BEAMER");
+                session = reference.startNewSession(Subject.BEAMER);
                 subjectChosen();
-
             }
         });
 
         buttonRefresh = new JButton();
-        buttonRefresh.setBounds(190, 240, 120, 35);
+        buttonRefresh.setBounds(90, 350, 120, 35);
+        buttonRefresh.setForeground(new Color(66, 143, 202));
+        buttonRefresh.setBackground(new Color(255, 255, 255));
         buttonRefresh.setEnabled(true);
-        buttonRefresh.setFont(new Font("droidsans", 0, 12));
+        buttonRefresh.setFont(new Font("raleway", 1, 14));
         buttonRefresh.setText("Neustart");
         buttonRefresh.setVisible(false);
 
         buttonRefresh.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                System.out.println("Clicked: Beamer");
-                session = reference.startNewSession("BEAMER");
-                subjectChosen();
-
+                startAgain();
             }
         });
 
@@ -133,7 +138,7 @@ public class GUI_project extends JFrame {
         label1.setForeground(new Color(255, 255, 255));
         label1.setHorizontalAlignment(0);
         label1.setEnabled(true);
-        label1.setFont(new Font("droidsans", 1, 30));
+        label1.setFont(new Font("raleway", 1, 30));
         label1.setText("IT-Problemlöser");
         label1.setVisible(true);
 
@@ -142,7 +147,7 @@ public class GUI_project extends JFrame {
         label2.setForeground(new Color(255, 255, 255));
         label2.setHorizontalAlignment(0);
         label2.setEnabled(true);
-        label2.setFont(new Font("droidsans", 0, 20));
+        label2.setFont(new Font("raleway", 0, 20));
         label2.setText("label");
         label2.setVisible(false);
 
@@ -151,7 +156,7 @@ public class GUI_project extends JFrame {
         label3.setForeground(new Color(255, 255, 255));
         label3.setHorizontalAlignment(0);
         label3.setEnabled(true);
-        label3.setFont(new Font("droidsans", 0, 14));
+        label3.setFont(new Font("raleway", 0, 14));
         label3.setText("label");
         label3.setVisible(false);
 
@@ -177,7 +182,7 @@ public class GUI_project extends JFrame {
         session.answerYes();
         label2.setText(session.getTitle());
         label3.setText(session.getDescription());
-        if(session.isAnswer()){
+        if (session.isAnswer()) {
             reboot("Ergebniss.");
         }
 
@@ -189,7 +194,7 @@ public class GUI_project extends JFrame {
         label2.setText(session.getTitle());
         label3.setText(session.getDescription());
 
-        if(session.isAnswer()){
+        if (session.isAnswer()) {
             reboot("Ergebniss.");
         }
     }
@@ -197,25 +202,27 @@ public class GUI_project extends JFrame {
     private void subjectChosen() {
 
         if (session != null) {
-            button3.setVisible(false);
-            button4.setVisible(false);
-            button5.setVisible(false);
+            if (session.isAvailable()) {
+                button3.setVisible(false);
+                button4.setVisible(false);
+                button5.setVisible(false);
 
-            button1.setVisible(true);
-            button2.setVisible(true);
+                button1.setVisible(true);
+                button2.setVisible(true);
 
-            label2.setText(session.getTitle());
-            label3.setText(session.getDescription());
+                label2.setText(session.getTitle());
+                label3.setText(session.getDescription());
 
-            label2.setVisible(true);
-            label3.setVisible(true);
+                label2.setVisible(true);
+                label3.setVisible(true);
+            }
         } else {
+
             button3.setVisible(false);
             button4.setVisible(false);
             button5.setVisible(false);
 
             reboot("Ein Fehler ist aufgetreten.");
-
         }
 
 
@@ -229,6 +236,22 @@ public class GUI_project extends JFrame {
         label2.setText(message);
         label2.setVisible(true);
         label3.setVisible(false);
+    }
+
+    private void startAgain() {
+        buttonRefresh.setVisible(false);
+
+        button3.setVisible(true);
+        button4.setVisible(true);
+        button5.setVisible(true);
+
+        label2.setVisible(false);
+        label3.setVisible(false);
+
+    }
+
+    private void newProblem() {
+
     }
 
 }
