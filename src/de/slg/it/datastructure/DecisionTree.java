@@ -1,6 +1,12 @@
 package de.slg.it.datastructure;
 
+
+
+import com.sun.istack.internal.NotNull;
+
 import de.slg.it.utility.ProblemContent;
+
+import de.slg.it.datastructure.*;
 
 /**
  * DecisionTree.
@@ -8,50 +14,60 @@ import de.slg.it.utility.ProblemContent;
  * Subklasse von BinaryTree, um einige Methoden für den Entscheidungsbaum erweitert.
  *
  * @author Gianni
- * @since 0.1
- * @version 2017.1512
+ * @since 0.7.1
+ * @version 2017.2912
  */
 public class DecisionTree extends BinaryTree<ProblemContent> {
 
     /**
      * Konstruktor.
      *
-     * Erstellt den Baum anhand eines Strings. Format des Strings: Titel_;_Inhalt_;_Bildpfad_;;_ ...
+     * Erstellt den Baum anhand eines Strings. Format des Strings: ;(L/R)(Level);Inhalt_;;_;(L/R)(Level);Inhalt_;;_ ...
      *
      * @param tree Stringrepräsentation des Baums
      */
-    public DecisionTree(String tree) {
-        super();
+    public DecisionTree(@NotNull String tree) {
 
+        if (tree.equals(""))
+            return;
+
+        String current = tree.split("_;;_")[0];
+        String[] data = current.split("_;_");
+
+        setContent(new ProblemContent(data[0], data[1], data[2]));
+
+        if (tree.contains(";L1;") && tree.contains(";R1;")) {
+            setLeftTree(new DecisionTree(tree.substring(tree.indexOf(";L1;"), tree.indexOf(";R1;")), 1));
+            setRightTree(new DecisionTree(tree.substring(tree.indexOf(";R1;")), 1));
+        }
+    }
+
+    private DecisionTree(@NotNull String tree, int level) {
         if(tree.equals("") || tree.equals("_;;_"))
             return;
 
-        String current = tree.substring(0, tree.indexOf("_;;_"));
-        String[] params = current.split("_;_");
+        String current = tree.split("_;;_")[0].substring(tree.indexOf(level+";")+2);
+        String[] data = current.split("_;_");
 
-        setContent(new ProblemContent(params[0], params[1], params[2]));
+        setContent(new ProblemContent(data[0], data[1], data[2]));
+        level++;
 
-        tree = tree.substring(tree.indexOf("_;;_")+3);
-
-        String[] components = tree.split("_;;_");
-        int centerIndex = components.length/2;
-
-        StringBuilder left = new StringBuilder();
-        for (int i = 0; i < centerIndex; i++) {
-            left.append(components[i]).append("_;;_");
+        if (tree.contains(";L"+level+";") && tree.contains(";R"+level+";")) {
+            setLeftTree(new DecisionTree(tree.substring(tree.indexOf(";L"+level+";"), tree.indexOf(";R"+level+";")), level));
+            setRightTree(new DecisionTree(tree.substring(tree.indexOf(";R"+level+";")), level));
         }
 
-        StringBuilder right = new StringBuilder();
-        for (int i = centerIndex; i < components.length; i++) {
-            right.append(components[i]).append("_;;_");
-        }
+    }
 
-        DecisionTree leftTree = new DecisionTree(left.toString());
-        DecisionTree rightTree = new DecisionTree(right.toString());
+    /**
+     * Standardkonstruktor.
+     */
+    public DecisionTree() {
+        super();
+    }
 
-        setLeftTree(leftTree);
-        setRightTree(rightTree);
-
+    public boolean hasChildren() {
+        return !(super.getLeftTree().isEmpty() && super.getRightTree().isEmpty());
     }
 
     public DecisionTree getLeftTree() {
@@ -73,19 +89,23 @@ public class DecisionTree extends BinaryTree<ProblemContent> {
     @Override
     //preorder
     public String toString() {
+        return toString(0);
+    }
 
+    private String toString(int level) {
         if(getContent() == null)
             return "";
 
-        ProblemContent content = getContent();
-
-        StringBuilder toString = new StringBuilder(content.title+"_;_"+content.description+"_;_"+content.pathToImage+"_;_")
+        StringBuilder toString = new StringBuilder(getContent().toString())
                 .append("_;;_");
 
-        if(getLeftTree() != null)
-            toString.append(getLeftTree().toString());
-        if(getRightTree() != null)
-            toString.append(getRightTree().toString());
+        level++;
+
+        if(!super.getLeftTree().isEmpty())
+            toString.append(";L").append(level).append(";").append(getLeftTree().toString(level));
+        if(!super.getRightTree().isEmpty()) {
+            toString.append(";R").append(level).append(";").append(getRightTree().toString(level));
+        }
 
         return toString.toString();
     }

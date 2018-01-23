@@ -1,15 +1,15 @@
 package de.slg.it;
 
-import de.slg.it.datastructure.DecisionTree;
+
 
 import java.util.Hashtable;
 
 class Session {
 
-    private DecisionTree current;
+    private de.slg.it.datastructure.DecisionTree current;
     private String subject;
 
-    Session(String subject, Hashtable<String, DecisionTree> selection) {
+    Session(String subject, Hashtable<String, de.slg.it.datastructure.DecisionTree> selection) {
         current = selection.get(subject);
         this.subject = subject;
     }

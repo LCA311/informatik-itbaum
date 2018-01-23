@@ -1,6 +1,6 @@
 package de.slg.it;
 
-import de.slg.it.datastructure.DecisionTree;
+
 import de.slg.it.utility.Subject;
 
 import java.io.BufferedReader;
@@ -21,18 +21,20 @@ import java.util.Hashtable;
 @SuppressWarnings("WeakerAcess")
 class Main {
     //Hashtable ist Threadsafe
-    private Hashtable<String, DecisionTree> decisionTreeMap;
+    private Hashtable<String, de.slg.it.datastructure.DecisionTree> decisionTreeMap;
 
     /**
      * Konstruktor.
      *
      * Wird bei Programmstart aufgerufen, instanziiert und initialisiert alle nötigen Programmteile (inkl. GUI).
      */
+
+
     Main() {
         decisionTreeMap = new Hashtable<>();
         syncTree(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
-
-        new GUI(this);
+        Main reference = this;
+        new GUI_project(reference);
     }
 
     /**
@@ -84,7 +86,7 @@ class Main {
                 if(result.startsWith("-"))
                     return;
 
-                decisionTreeMap.put(subject, new DecisionTree(result));
+                decisionTreeMap.put(subject, new de.slg.it.datastructure.DecisionTree(result));
 
             } catch (IOException e) {
                 e.printStackTrace();

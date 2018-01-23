@@ -1,182 +1,234 @@
 package de.slg.it;
 
-import javax.swing.UIManager.LookAndFeelInfo;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-import javax.swing.border.Border;
+
 import javax.swing.*;
 
 
+public class GUI_project extends JFrame {
+
+    private JButton button1; //JA NEIN
+    private JButton button2;
+
+    private JButton button3; //NETZWERK, COMPUTER, BEAMER
+    private JButton button4;
+    private JButton button5;
+
+    private JButton buttonRefresh;
+
+    private JLabel label1;
+    private JLabel label2;
+    private JLabel label3;
+
+    private Session session = null;
+
+    //
+    GUI_project(Main reference) {
+        //System.setProperty("swing.defaultlaf", "com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); //TODO
+        this.setTitle("IT-Problemlöser");
+        this.setSize(300, 400);
+
+        JPanel contentPane = new JPanel(null);
+        contentPane.setPreferredSize(new Dimension(300, 400));
+        contentPane.setBackground(new Color(66, 143, 202));
 
 
+        button1 = new JButton();
+        button1.setBounds(190, 350, 90, 35);
+        button1.setForeground(new Color(0, 0, 0));
+        button1.setEnabled(true);
+        button1.setFont(new Font("droidsans", 0, 12));
+        button1.setText("Ja");
+        button1.setVisible(false);
+        button1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                yesClicked(evt);
+            }
+        });
 
-    public class GUI_project extends JFrame {
+        button2 = new JButton();
+        button2.setBounds(20, 350, 90, 35);
+        button2.setForeground(new Color(0, 0, 0));
+        button2.setEnabled(true);
+        button2.setFont(new Font("droidsans", 0, 12));
+        button2.setText("Nein");
+        button2.setVisible(false);
+        button2.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                noClicked(evt);
+            }
+        });
 
-        private JMenuBar menuBar;
-        private JButton button1;
-        private JButton button2;
-        private JLabel label1;
-        private JLabel label2;
-        private JLabel label3;
+        //ERSTE AUSWAHL, PROBLEM = NETZWERK BEAMER COMPUTER
 
-        //Constructor
-        public GUI_project(){
+        button3 = new JButton();
+        button3.setBounds(90, 100, 120, 35);
+        button3.setEnabled(true);
+        button3.setFont(new Font("droidsans", 0, 12));
+        button3.setText("Netzwerk");
+        button3.setVisible(true);
 
-            this.setTitle("GUI_project");
-            this.setSize(300,400);
-            //menu generate method
-            generateMenu();
-            this.setJMenuBar(menuBar);
+        button3.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                System.out.println("Clicked: Netzwerk");
+                session = reference.startNewSession("NETZWERK");
+                subjectChosen();
+            }
+        });
 
-            //pane with null layout
-            JPanel contentPane = new JPanel(null);
-            contentPane.setPreferredSize(new Dimension(300,400));
-            contentPane.setBackground(new Color(192,192,192));
+        button4 = new JButton();
+        button4.setBounds(90, 170, 120, 35);
+        button4.setForeground(new Color(0, 0, 0));
+        button4.setEnabled(true);
+        button4.setFont(new Font("droidsans", 0, 12));
+        button4.setText("Computer");
+        button4.setVisible(true);
 
+        button4.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                System.out.println("Clicked: Computer");
+                session = reference.startNewSession("COMPUTER");
+                subjectChosen();
 
-            button1 = new JButton();
-            button1.setBounds(176,349,90,35);
-            button1.setBackground(new Color(214,217,223));
-            button1.setForeground(new Color(0,0,0));
-            button1.setEnabled(true);
-            button1.setFont(new Font("sansserif",0,12));
-            button1.setText("Button1");
-            button1.setVisible(true);
-            //Set methods for mouse events
-            //Call defined methods
-            button1.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent evt) {
-                    yesClicked(evt);
-                }
-            });
-
-
-            button2 = new JButton();
-            button2.setBounds(21,351,90,35);
-            button2.setBackground(new Color(214,217,223));
-            button2.setForeground(new Color(0,0,0));
-            button2.setEnabled(true);
-            button2.setFont(new Font("sansserif",0,12));
-            button2.setText("Button2");
-            button2.setVisible(true);
-            //Set action for button click
-            //Call defined method
-            button2.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    noPressed(evt);
-                }
-            });
-
-            //Set methods for mouse events
-            //Call defined methods
-            button2.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent evt) {
-                    noClicked(evt);
-                }
-            });
+            }
+        });
 
 
-            label1 = new JLabel();
-            label1.setBounds(96,6,90,35);
-            label1.setBackground(new Color(214,217,223));
-            label1.setForeground(new Color(0,0,0));
-            label1.setEnabled(true);
-            label1.setFont(new Font("sansserif",0,12));
-            label1.setText("label");
-            label1.setVisible(true);
+        button5 = new JButton();
+        button5.setBounds(90, 240, 120, 35);
+        button5.setEnabled(true);
+        button5.setFont(new Font("droidsans", 0, 12));
+        button5.setText("Beamer");
+        button5.setVisible(true);
 
-            label2 = new JLabel();
-            label2.setBounds(80,60,90,35);
-            label2.setBackground(new Color(214,217,223));
-            label2.setForeground(new Color(0,0,0));
-            label2.setEnabled(true);
-            label2.setFont(new Font("sansserif",0,12));
-            label2.setText("label");
-            label2.setVisible(true);
+        button5.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                System.out.println("Clicked: Beamer");
+                session = reference.startNewSession("BEAMER");
+                subjectChosen();
 
-            label3 = new JLabel();
-            label3.setBounds(74,92,90,35);
-            label3.setBackground(new Color(214,217,223));
-            label3.setForeground(new Color(0,0,0));
-            label3.setEnabled(true);
-            label3.setFont(new Font("sansserif",0,12));
-            label3.setText("label");
-            label3.setVisible(true);
+            }
+        });
 
-            //adding components to contentPane panel
-            contentPane.add(button1);
-            contentPane.add(button2);
-            contentPane.add(label1);
-            contentPane.add(label2);
-            contentPane.add(label3);
+        buttonRefresh = new JButton();
+        buttonRefresh.setBounds(190, 240, 120, 35);
+        buttonRefresh.setEnabled(true);
+        buttonRefresh.setFont(new Font("droidsans", 0, 12));
+        buttonRefresh.setText("Neustart");
+        buttonRefresh.setVisible(false);
 
-            //adding panel to JFrame and seting of window position and close operation
-            this.add(contentPane);
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.setLocationRelativeTo(null);
-            this.pack();
-            this.setVisible(true);
-        }
+        buttonRefresh.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                System.out.println("Clicked: Beamer");
+                session = reference.startNewSession("BEAMER");
+                subjectChosen();
 
-        //Method mouseClicked for button1
-        private void yesClicked (MouseEvent evt) {
-            //TODO
-        }
+            }
+        });
 
-        //Method actionPerformed for button2
-        private void noPressed (ActionEvent evt) {
-            //TODO
-        }
+        label1 = new JLabel();
+        label1.setBounds(0, 5, 300, 40);
+        label1.setForeground(new Color(255, 255, 255));
+        label1.setHorizontalAlignment(0);
+        label1.setEnabled(true);
+        label1.setFont(new Font("droidsans", 1, 30));
+        label1.setText("IT-Problemlöser");
+        label1.setVisible(true);
 
-        //Method mouseClicked for button2
-        private void noClicked (MouseEvent evt) {
-            //TODO
-        }
+        label2 = new JLabel();
+        label2.setBounds(0, 60, 300, 60);
+        label2.setForeground(new Color(255, 255, 255));
+        label2.setHorizontalAlignment(0);
+        label2.setEnabled(true);
+        label2.setFont(new Font("droidsans", 0, 20));
+        label2.setText("label");
+        label2.setVisible(false);
 
-        //method for generate menu
-        public void generateMenu(){
-            menuBar = new JMenuBar();
+        label3 = new JLabel();
+        label3.setBounds(0, 90, 300, 120);
+        label3.setForeground(new Color(255, 255, 255));
+        label3.setHorizontalAlignment(0);
+        label3.setEnabled(true);
+        label3.setFont(new Font("droidsans", 0, 14));
+        label3.setText("label");
+        label3.setVisible(false);
 
-            JMenu file = new JMenu("File");
-            JMenu tools = new JMenu("Tools");
-            JMenu help = new JMenu("Help");
+        contentPane.add(button1);
+        contentPane.add(button2);
+        contentPane.add(button3);
+        contentPane.add(button4);
+        contentPane.add(button5);
+        contentPane.add(buttonRefresh);
+        contentPane.add(label1);
+        contentPane.add(label2);
+        contentPane.add(label3);
 
-            JMenuItem open = new JMenuItem("Open   ");
-            JMenuItem save = new JMenuItem("Save   ");
-            JMenuItem exit = new JMenuItem("Exit   ");
-            JMenuItem preferences = new JMenuItem("Preferences   ");
-            JMenuItem about = new JMenuItem("About   ");
+        this.add(contentPane);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.pack();
+        this.setVisible(true);
+    }
 
-
-            file.add(open);
-            file.add(save);
-            file.addSeparator();
-            file.add(exit);
-            tools.add(preferences);
-            help.add(about);
-
-            menuBar.add(file);
-            menuBar.add(tools);
-            menuBar.add(help);
-        }
-
-
-
-        public static void main(String[] args){
-            System.setProperty("swing.defaultlaf", "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-            javax.swing.SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    new GUI_project();
-                }
-            });
+    //Method mouseClicked for button1
+    private void yesClicked(MouseEvent evt) {
+        session.answerYes();
+        label2.setText(session.getTitle());
+        label3.setText(session.getDescription());
+        if(session.isAnswer()){
+            reboot("Ergebniss.");
         }
 
     }
+
+    //Method mouseClicked for button2
+    private void noClicked(MouseEvent evt) {
+        session.answerNo();
+        label2.setText(session.getTitle());
+        label3.setText(session.getDescription());
+
+        if(session.isAnswer()){
+            reboot("Ergebniss.");
+        }
+    }
+
+    private void subjectChosen() {
+
+        if (session != null) {
+            button3.setVisible(false);
+            button4.setVisible(false);
+            button5.setVisible(false);
+
+            button1.setVisible(true);
+            button2.setVisible(true);
+
+            label2.setText(session.getTitle());
+            label3.setText(session.getDescription());
+
+            label2.setVisible(true);
+            label3.setVisible(true);
+        } else {
+            button3.setVisible(false);
+            button4.setVisible(false);
+            button5.setVisible(false);
+
+            reboot("Ein Fehler ist aufgetreten.");
+
+        }
+
+
+    }
+
+    private void reboot(String message) {
+        button1.setVisible(false);
+        button2.setVisible(false);
+
+        buttonRefresh.setVisible(true);
+        label2.setText(message);
+        label2.setVisible(true);
+        label3.setVisible(false);
+    }
+
 }
