@@ -4,43 +4,71 @@ package de.slg.it;
 import de.slg.it.datastructure.DecisionTree;
 import de.slg.it.utility.Subject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Hashtable;
 
 /**
  * Main.
- *
+ * <p>
  * Allgemeine Klasse der PC-Komponente. Verwaltet die Programmlogik.
  *
  * @author Gianni, Mirko
- * @since 0.1
  * @version 2017.1712
+ * @since 0.1
  */
 @SuppressWarnings("WeakerAcess")
 class Main {
     //Hashtable ist Threadsafe
     private Hashtable<String, DecisionTree> decisionTreeMap;
+    private BufferedImage bufImage;
+    private boolean hasInternet;
 
     /**
      * Konstruktor.
-     *
+     * <p>
      * Wird bei Programmstart aufgerufen, instanziiert und initialisiert alle nötigen Programmteile (inkl. GUI).
      */
 
 
     Main() {
+        hasInternet = hasInternet();
         decisionTreeMap = new Hashtable<>();
-        syncTree(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
-        Main reference = this;
-        fillMissingTrees(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
-        new GUI_project(reference);
+        if (hasInternet) {
+            syncTree(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
+            Main reference = this;
+            fillMissingTrees(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
+            new GUI_project(reference);
+        } else {
+            //TODO Textdatei
+        }
+    }
 
-        //TODO HTTP Get == 200
-        //TODO an Baum
+    private boolean hasInternet() {
+        try {
+            URL url = new URL("http://google.com");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
 
+            int code = connection.getResponseCode();
+            System.out.println("Response code of the object is " + code);
+            if (code == 200) {
+                System.out.println("OK HTTP 200");
+                return true;
+
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            //System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     /**
@@ -76,7 +104,7 @@ class Main {
         @Override
         public void run() {
             try {
-                URL updateURL = new URL(Start.DOMAIN_DEV + "get.php?subject="+subject);
+                URL updateURL = new URL(Start.DOMAIN_DEV + "get.php?subject=" + subject);
                 BufferedReader reader =
                         new BufferedReader(
                                 new InputStreamReader(updateURL.openConnection().getInputStream(), "UTF-8"));
@@ -89,7 +117,7 @@ class Main {
 
                 String result = builder.toString();
 
-                if(result.startsWith("-"))
+                if (result.startsWith("-"))
                     return;
 
                 decisionTreeMap.put(subject, new DecisionTree(result));
@@ -98,8 +126,6 @@ class Main {
                 e.printStackTrace();
             }
         }
-
-
 
 
     }
@@ -113,4 +139,79 @@ class Main {
         }
     }
 
+
+    /**
+     * //TODO Interface JLabel
+     */
+    public BufferedImage syncCurrentImage(String pathToFile, JLabel pic) {
+        Runnable cur = new SynchronizerImage(pathToFile, pic);
+        new Thread(cur).start();
+        if (bufImage != null) {
+            return bufImage;
+        }
+        return null;
+    }
+
+    private class SynchronizerImage implements Runnable {
+
+        private String pathToFile;
+        private JLabel pic;
+
+        private SynchronizerImage(String pathToFile, JLabel pic) {
+            this.pathToFile = pathToFile;
+            this.pic = pic;
+        }
+
+        @Override
+        public void run() {
+            try {
+                URL updateURL = new URL(Start.DOMAIN_DATA + pathToFile);
+                BufferedImage image = ImageIO.read(updateURL);
+
+
+                if (image == null){
+                    System.out.println("BufferedImage is null");
+                    return;
+                }
+
+
+                bufImage = image;
+                pic.setIcon(new ImageIcon(image));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+    public void uploadImage(String localPath, String fileName) throws IOException, InterruptedException {
+        HttpURLConnection httpUrlConnection = (HttpURLConnection)new URL("http://moritz.liegmanns.de/leoapp_php/itbaum/uploadImage.php?"+fileName).openConnection();
+        httpUrlConnection.setDoOutput(true);
+        httpUrlConnection.setRequestMethod("POST");
+        OutputStream os = httpUrlConnection.getOutputStream();
+        Thread.sleep(1000);
+        BufferedInputStream fis = new BufferedInputStream(new FileInputStream(localPath));
+
+   //     for (int i = 0; i < totalByte; i++) {
+      //      os.write(fis.read());
+     //       byteTrasferred = i + 1;
+     //   }
+
+        os.close();
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(
+                        httpUrlConnection.getInputStream()));
+
+        String s = null;
+        while ((s = in.readLine()) != null) {
+            System.out.println(s);
+        }
+        in.close();
+        fis.close();
+    }
+
+    public boolean internetAvailable(){
+        return hasInternet;
+    }
 }

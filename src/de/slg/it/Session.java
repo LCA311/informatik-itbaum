@@ -35,7 +35,7 @@ public class Session {
     }
 
     public boolean isAvailable() {
-        System.out.println(String.valueOf(current == null));
+       // System.out.println(String.valueOf(current == null));
         return !current.isEmpty();
     }
 

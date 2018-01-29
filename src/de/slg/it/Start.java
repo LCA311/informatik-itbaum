@@ -14,6 +14,7 @@ import javax.swing.*;
 public class Start {
     public static final String DOMAIN_SYNC = "https://ucloud4schools.de/ext/slg/leoapp_php/itbaum/";
     public static final String DOMAIN_DEV = "http://moritz.liegmanns.de/leoapp_php/itbaum/";
+    public static final String DOMAIN_DATA = "http://moritz.liegmanns.de/leoapp_php/data/";
 
     public static void main(String[] args) {
         new Main();
@@ -22,10 +23,7 @@ public class Start {
         try {
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
-        } catch (UnsupportedLookAndFeelException e) {
-        } catch (ClassNotFoundException e) {
-        } catch (InstantiationException e) {
-        } catch (IllegalAccessException e) {
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException ignored) {
         }
 
     }
