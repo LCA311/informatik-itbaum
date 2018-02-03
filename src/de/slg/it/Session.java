@@ -3,6 +3,7 @@ package de.slg.it;
 import java.util.Hashtable;
 
 import de.slg.it.datastructure.DecisionTree;
+import de.slg.it.utility.ProblemContent;
 
 public class Session {
 
@@ -47,4 +48,11 @@ public class Session {
         current = current.getLeftTree();
     }
 
+    public DecisionTree getCurrent() {
+       return current;
+    }
+
+    public void setContent(ProblemContent p) {
+        current.setContent(p);
+    }
 }

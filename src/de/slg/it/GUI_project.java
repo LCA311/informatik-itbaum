@@ -1,15 +1,12 @@
 package de.slg.it;
 
+import de.slg.it.datastructure.DecisionTree;
+import de.slg.it.utility.ProblemContent;
 import de.slg.it.utility.Subject;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.nio.Buffer;
-
 import javax.swing.*;
 
 
@@ -27,20 +24,20 @@ class GUI_project extends JFrame {
 
     private JLabel label1;
     private JLabel label2;
-    private JLabel label3;
+
+    private JTextArea textArea;
 
     private JLabel picLabel;
 
+    private JScrollPane scrollPane;
 
     private Session session = null;
-
     private Main curReference;
 
 
     GUI_project(Main reference) {
         curReference = reference;
 
-        newProblem();
 
         this.setTitle("IT-Problemlöser");
         this.setSize(300, 400);
@@ -50,9 +47,12 @@ class GUI_project extends JFrame {
         contentPane.setBackground(new Color(66, 143, 202));
 
         //BufferedImage myPicture = ImageIO.read(new reference.sy);
-        picLabel = new JLabel("..");
+        picLabel = new JLabel("Kein Bild");
         picLabel.setBounds(0, 130, 300, 200);
+        picLabel.setForeground(new Color(255, 255, 255));
         picLabel.setVisible(false);
+        picLabel.setFont(new Font("raleway", Font.BOLD, 14));
+
         picLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
 
         button1 = new JButton();
@@ -145,7 +145,6 @@ class GUI_project extends JFrame {
         buttonRefresh.setFont(new Font("raleway", 1, 14));
         buttonRefresh.setText("Neustart");
         buttonRefresh.setVisible(false);
-
         buttonRefresh.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 startAgain();
@@ -153,17 +152,16 @@ class GUI_project extends JFrame {
         });
 
         buttonAdd = new JButton();
-        buttonAdd.setBounds(240, 350, 35, 35);
+        buttonAdd.setBounds(240, 350, 45, 35);
         buttonAdd.setForeground(new Color(66, 143, 202));
         buttonAdd.setBackground(new Color(255, 255, 255));
         buttonAdd.setEnabled(true);
-        buttonAdd.setFont(new Font("raleway", 1, 14));
+        buttonAdd.setFont(new Font("raleway", 1, 18));
         buttonAdd.setText("+");
         buttonAdd.setVisible(false);
-
         buttonAdd.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                startAgain();
+                openPassword();
             }
         });
 
@@ -177,7 +175,7 @@ class GUI_project extends JFrame {
         label1.setVisible(true);
 
         label2 = new JLabel();
-        label2.setBounds(0, 40, 300, 60);
+        label2.setBounds(0, 20, 300, 60);
         label2.setForeground(new Color(255, 255, 255));
         label2.setHorizontalAlignment(0);
         label2.setEnabled(true);
@@ -185,14 +183,26 @@ class GUI_project extends JFrame {
         label2.setText("label");
         label2.setVisible(false);
 
-        label3 = new JLabel();
-        label3.setBounds(0, 50, 300, 120);
-        label3.setForeground(new Color(255, 255, 255));
-        label3.setHorizontalAlignment(0);
-        label3.setEnabled(true);
-        label3.setFont(new Font("raleway", 0, 14));
-        label3.setText("label");
-        label3.setVisible(false);
+        textArea = new JTextArea();
+        //textArea.setBounds(0, 60, 300, 60);
+        textArea.setForeground(new Color(255, 255, 255));
+        textArea.setEnabled(true);
+        textArea.setFont(new Font("raleway", 0, 14));
+        textArea.setText("label");
+        textArea.setEditable(false);
+
+        textArea.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+        textArea.setBackground(new Color(66, 143, 202));
+        //textArea.setVisible(false);
+
+
+        //scrollPane.add(textArea);
+        scrollPane = new JScrollPane(textArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        //scrollPane.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+        scrollPane.setVisible(false);
+        // scrollPane.setSize(100,100);
+        scrollPane.setBounds(0, 65, 300, 60);
+        contentPane.add(scrollPane);
 
         contentPane.add(button1);
         contentPane.add(button2);
@@ -203,7 +213,7 @@ class GUI_project extends JFrame {
         contentPane.add(buttonAdd);
         contentPane.add(label1);
         contentPane.add(label2);
-        contentPane.add(label3);
+        //   contentPane.add(textArea);
         contentPane.add(picLabel);
 
         this.add(contentPane);
@@ -214,15 +224,14 @@ class GUI_project extends JFrame {
         this.setVisible(true);
     }
 
-    //Method mouseClicked for button1
     private void yesClicked(MouseEvent evt) {
         session.answerYes();
         if (session.isAnswer()) {
             reboot("Ergebniss.");
         }
         label2.setText(session.getTitle());
-        label3.setText(session.getDescription());
-
+        textArea.setText(session.getDescription());
+        picLabel.setIcon(null);
 
     }
 
@@ -233,8 +242,8 @@ class GUI_project extends JFrame {
             reboot("Ergebniss.");
         }
         label2.setText(session.getTitle());
-        label3.setText(session.getDescription());
-
+        textArea.setText(session.getDescription());
+        picLabel.setIcon(null);
 
     }
 
@@ -250,22 +259,20 @@ class GUI_project extends JFrame {
                 button2.setVisible(true);
 
                 label2.setText(session.getTitle());
-                label3.setText(session.getDescription());
-                //if (session.getPath() != null) { //TODO
-                curReference.syncCurrentImage("hacker-stock-photo-15.jpg", picLabel);
-                picLabel.setVisible(true);
-                // }
+                textArea.setText(session.getDescription());
+                if (session.getPath() != null) {
+                    curReference.syncCurrentImage("hacker-stock-photo-15.jpg", picLabel);
+                    picLabel.setVisible(true);
+                }
 
 
-                // }
-                // else{
-                //     System.out.println("bufferedImage is NULL");
-                // }
-
-
-                label2.setVisible(true);
-                label3.setVisible(true);
+            } else {
+                System.out.println("bufferedImage is NULL");
             }
+
+
+            label2.setVisible(true);
+            scrollPane.setVisible(true);
         } else {
 
             button3.setVisible(false);
@@ -275,8 +282,8 @@ class GUI_project extends JFrame {
             reboot("Ein Fehler ist aufgetreten.");
         }
 
-
     }
+
 
     private void reboot(String message) {
         button1.setVisible(false);
@@ -286,7 +293,7 @@ class GUI_project extends JFrame {
         buttonAdd.setVisible(true);
         label2.setText(message);
         label2.setVisible(true);
-        label3.setVisible(false);
+        scrollPane.setVisible(false);
         picLabel.setVisible(false);
     }
 
@@ -299,25 +306,48 @@ class GUI_project extends JFrame {
         button5.setVisible(true);
 
         label2.setVisible(false);
-        label3.setVisible(false);
+        scrollPane.setVisible(false);
 
     }
 
-    private void newProblem() {
+    private void openPassword() {
         if (curReference.internetAvailable())
-            new NewEntryDialog(new Frame(), this);
+            new PasswordDialog(new Frame(), this);
         else
             label2.setText("Dazu ist ein Internetzugang nötig.");
+
+    }
+
+    public void newProblem() {
+        new NewEntryDialog(new Frame(), this);
     }
 
     public void addTree(String q, String qDesc, String ansNo, String noDesc, String ansYe, String yesDesc, String localPath, String file) {
-        if (localPath != null && file != null) {
-            try {
+        System.out.println("Adding tree...");
+        if (!ansNo.equals("") && !noDesc.equals("")) {
+            String no = ansNo + "_;_" + noDesc + "_;_null_;;_";
+            DecisionTree treeNo = new DecisionTree(no);
+            session.getCurrent().setRightTree(treeNo);
+        }
+
+        if (!ansYe.equals("") && !yesDesc.equals("")) {
+            String yes = ansYe + "_;_" + yesDesc + "_;_null_;;_";
+            DecisionTree treeYes = new DecisionTree(yes);
+            session.getCurrent().setLeftTree(treeYes);
+        }
+
+        if (!q.equals("") || !qDesc.equals("")) {
+
+            if (localPath != null && file != null) {
+                System.out.println("Uploading image...");
                 curReference.uploadImage(localPath, file);
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
+                session.setContent(new ProblemContent(q, qDesc, file));
+                curReference.uploadTree(session.getSubject());
+            } else {
+                System.out.println("No image attached...");
+                session.setContent(new ProblemContent(q, qDesc, "null"));
+                curReference.uploadTree(session.getSubject());
             }
         }
-      //  String makeTree = q+"_;_"+qDesc+"_;_"+"null"+"_;;_;"+"DUNNO"+ ansNo+"_;_"+noDesc"_;_"+"null"+
     }
 }

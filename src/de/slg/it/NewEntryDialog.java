@@ -19,6 +19,7 @@ public class NewEntryDialog extends JDialog implements ActionListener {
     private JTextField yes_desc;
 
     private GUI_project gui;
+    private Frame fr;
     private JOptionPane optionPane;
 
     private JButton btnOK;
@@ -45,6 +46,7 @@ public class NewEntryDialog extends JDialog implements ActionListener {
         setSize(400, 600);
 
         gui = parent;
+        fr = aFrame;
 
         fc = new JFileChooser();
         setTitle("Neue Frage erstellen");
@@ -86,11 +88,12 @@ public class NewEntryDialog extends JDialog implements ActionListener {
                 File file = fc.getSelectedFile();
                 localPath = file.getAbsolutePath();
                 fileName = file.getName();
+                gui.addTree(question.getText(), question_desc.getText(), answerNo.getText(), no_desc.getText(), answerYes.getText(), yes_desc.getText(), localPath, fileName);
             }
         }
         if (e.getSource().equals(btnOK)) {
+            System.out.println("Clicked OK.");
             if (localPath != null && fileName != null) {
-                gui.addTree(question.getText(), question_desc.getText(), answerNo.getText(), no_desc.getText(), answerYes.getText(), yes_desc.getText(), localPath, fileName);
             } else {
                 gui.addTree(question.getText(), question_desc.getText(), answerNo.getText(), no_desc.getText(), answerYes.getText(), yes_desc.getText(), null, null);
             }
@@ -106,5 +109,6 @@ public class NewEntryDialog extends JDialog implements ActionListener {
         answerYes.setText("");
         answerNo.setText("");
         setVisible(false);
+        fr.dispose();
     }
 }

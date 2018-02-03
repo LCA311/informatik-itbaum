@@ -1,7 +1,5 @@
 package de.slg.it.datastructure;
 
-
-import com.sun.istack.internal.NotNull;
 import de.slg.it.datastructure.BinaryTree;
 import de.slg.it.utility.ProblemContent;
 
@@ -23,7 +21,7 @@ public class DecisionTree extends BinaryTree<ProblemContent> {
      *
      * @param tree Stringrepräsentation des Baums
      */
-    public DecisionTree(@NotNull String tree) {
+    public DecisionTree(String tree) {
 
         if (tree.equals(""))
             return;
@@ -39,7 +37,7 @@ public class DecisionTree extends BinaryTree<ProblemContent> {
         }
     }
 
-    private DecisionTree(@NotNull String tree, int level) {
+    private DecisionTree(String tree, int level) {
         if(tree.equals("") || tree.equals("_;;_"))
             return;
 

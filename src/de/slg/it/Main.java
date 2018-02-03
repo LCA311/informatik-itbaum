@@ -6,12 +6,17 @@ import de.slg.it.utility.Subject;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.Hashtable;
+
+import static java.awt.image.BufferedImage.TYPE_INT_RGB;
+
 
 /**
  * Main.
@@ -26,7 +31,6 @@ import java.util.Hashtable;
 class Main {
     //Hashtable ist Threadsafe
     private Hashtable<String, DecisionTree> decisionTreeMap;
-    private BufferedImage bufImage;
     private boolean hasInternet;
 
     /**
@@ -45,7 +49,10 @@ class Main {
             fillMissingTrees(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
             new GUI_project(reference);
         } else {
-            //TODO Textdatei
+            Main reference = this;
+            fillMissingTrees(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
+            new GUI_project(reference);
+
         }
     }
 
@@ -141,15 +148,11 @@ class Main {
 
 
     /**
-     * //TODO Interface JLabel
+     *
      */
-    public BufferedImage syncCurrentImage(String pathToFile, JLabel pic) {
+    public void syncCurrentImage(String pathToFile, JLabel pic) {
         Runnable cur = new SynchronizerImage(pathToFile, pic);
         new Thread(cur).start();
-        if (bufImage != null) {
-            return bufImage;
-        }
-        return null;
     }
 
     private class SynchronizerImage implements Runnable {
@@ -166,17 +169,27 @@ class Main {
         public void run() {
             try {
                 URL updateURL = new URL(Start.DOMAIN_DATA + pathToFile);
-                BufferedImage image = ImageIO.read(updateURL);
+                BufferedImage bufImage = ImageIO.read(updateURL);
 
 
-                if (image == null){
+                if (bufImage == null) {
                     System.out.println("BufferedImage is null");
                     return;
                 }
 
 
-                bufImage = image;
-                pic.setIcon(new ImageIcon(image));
+               // BufferedImage newImage;
+                ImageIcon imageIcon;
+
+                if (bufImage.getWidth() > bufImage.getHeight()) {
+                    imageIcon = new ImageIcon(new ImageIcon(bufImage).getImage().getScaledInstance(pic.getWidth(), -1, Image.SCALE_DEFAULT));
+                } else {
+                    imageIcon = new ImageIcon(new ImageIcon(bufImage).getImage().getScaledInstance(-1, pic.getHeight(), Image.SCALE_DEFAULT));
+
+                }
+
+                pic.setIcon(imageIcon);
+               // pic.setIcon(new ImageIcon(newImage));
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -185,33 +198,90 @@ class Main {
 
 
     }
-    public void uploadImage(String localPath, String fileName) throws IOException, InterruptedException {
-        HttpURLConnection httpUrlConnection = (HttpURLConnection)new URL("http://moritz.liegmanns.de/leoapp_php/itbaum/uploadImage.php?"+fileName).openConnection();
-        httpUrlConnection.setDoOutput(true);
-        httpUrlConnection.setRequestMethod("POST");
-        OutputStream os = httpUrlConnection.getOutputStream();
-        Thread.sleep(1000);
-        BufferedInputStream fis = new BufferedInputStream(new FileInputStream(localPath));
 
-   //     for (int i = 0; i < totalByte; i++) {
-      //      os.write(fis.read());
-     //       byteTrasferred = i + 1;
-     //   }
+    public void uploadImage(String localPath, String fileName) {
+        Runnable r = new ImageUploader(localPath);
+        new Thread(r).start();
 
-        os.close();
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(
-                        httpUrlConnection.getInputStream()));
-
-        String s = null;
-        while ((s = in.readLine()) != null) {
-            System.out.println(s);
-        }
-        in.close();
-        fis.close();
     }
 
-    public boolean internetAvailable(){
+    private class ImageUploader implements Runnable{
+        String localPath;
+        ImageUploader(String localPath){
+            this.localPath = localPath;
+        }
+
+        @Override
+        public void run() {
+            try {
+                File fi = new File(localPath);
+                byte[] fileContent = Files.readAllBytes(fi.toPath());
+
+                System.out.println("Opening connection for image upload..."+localPath);
+                URL uploadURL = new URL("http://moritz.liegmanns.de/leoapp_php/itbaum/uploadImage.php");
+                HttpURLConnection conn = (HttpURLConnection) uploadURL.openConnection();
+                conn.setDoOutput(true);
+                conn.setRequestMethod("POST");
+
+                OutputStream outputStream = conn.getOutputStream();
+                outputStream.write(fileContent);
+
+                outputStream.close();
+                System.out.println("Image uploaded.");
+
+                BufferedReader reader =
+                        new BufferedReader(
+                                new InputStreamReader(
+                                        conn.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null)
+                    System.out.println("Image result: "+line);
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public void uploadTree(String d) {
+        new SynchronizerUpstream(d);
+        Runnable cur = new SynchronizerUpstream(d);
+        new Thread(cur).start();
+    }
+
+    private class SynchronizerUpstream implements Runnable {
+        String subject;
+
+        SynchronizerUpstream(String subject) {
+            this.subject = subject;
+        }
+
+        @Override
+        public void run() {
+            try {
+                System.out.println(decisionTreeMap.get(subject).toString());
+                URL url = new URL(Start.DOMAIN_DEV + "update.php?text=" + decisionTreeMap.get(subject).toString().replace(" ", "%20") + "&thema=" + subject);
+                BufferedReader reader =
+                        new BufferedReader(
+                                new InputStreamReader(
+                                        url.openConnection().getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null)
+                    System.out.println(line);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public boolean internetAvailable() {
         return hasInternet;
     }
+
 }

@@ -1,8 +1,5 @@
 
 package de.slg.it.datastructure;
-
-import com.sun.istack.internal.NotNull;
-
 import java.util.Iterator;
 
 /**
@@ -99,7 +96,6 @@ public class BinaryTree<ContentType> implements Iterable<ContentType> {
         }
     }
 
-    @NotNull
     @Override
     //preorder
     public Iterator<ContentType> iterator() {
