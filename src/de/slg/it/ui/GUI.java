@@ -1,5 +1,7 @@
-package de.slg.it;
+package de.slg.it.ui;
 
+import de.slg.it.Main;
+import de.slg.it.Session;
 import de.slg.it.datastructure.DecisionTree;
 import de.slg.it.utility.ProblemContent;
 import de.slg.it.utility.Subject;
@@ -7,10 +9,11 @@ import de.slg.it.utility.Subject;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.*;
 
 
-class GUI_project extends JFrame {
+public class GUI extends JFrame {
 
     private JButton button1; //JA NEIN
     private JButton button2;
@@ -35,7 +38,7 @@ class GUI_project extends JFrame {
     private Main curReference;
 
 
-    GUI_project(Main reference) {
+    public GUI(Main reference) {
         curReference = reference;
 
 

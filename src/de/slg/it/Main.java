@@ -2,6 +2,7 @@ package de.slg.it;
 
 
 import de.slg.it.datastructure.DecisionTree;
+import de.slg.it.ui.GUI;
 import de.slg.it.utility.Subject;
 
 import javax.imageio.ImageIO;
@@ -10,12 +11,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.Hashtable;
-
-import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 
 /**
@@ -27,8 +25,7 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
  * @version 2017.1712
  * @since 0.1
  */
-@SuppressWarnings("WeakerAcess")
-class Main {
+public class Main {
     //Hashtable ist Threadsafe
     private Hashtable<String, DecisionTree> decisionTreeMap;
     private boolean hasInternet;
@@ -38,8 +35,6 @@ class Main {
      * <p>
      * Wird bei Programmstart aufgerufen, instanziiert und initialisiert alle nötigen Programmteile (inkl. GUI).
      */
-
-
     Main() {
         hasInternet = hasInternet();
         decisionTreeMap = new Hashtable<>();
@@ -47,12 +42,11 @@ class Main {
             syncTree(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
             Main reference = this;
             fillMissingTrees(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
-            new GUI_project(reference);
+            new GUI(reference);
         } else {
             Main reference = this;
             fillMissingTrees(Subject.BEAMER, Subject.COMPUTER, Subject.NETWORK);
-            new GUI_project(reference);
-
+            new GUI(reference);
         }
     }
 
@@ -73,7 +67,6 @@ class Main {
                 return false;
             }
         } catch (Exception e) {
-            //System.out.println(e.getMessage());
             return false;
         }
     }
@@ -84,7 +77,7 @@ class Main {
      *
      * @param subject {@link Subject Thema} des Problems
      */
-    Session startNewSession(String subject) {
+    public Session startNewSession(String subject) {
         return new Session(subject, decisionTreeMap);
     }
 
@@ -93,7 +86,7 @@ class Main {
      *
      * @param trees Bäume die aktualisiert werden sollen.
      */
-    void syncTree(String... trees) {
+    private void syncTree(String... trees) {
         for (String tree : trees) {
             Runnable cur = new SynchronizerDownstream(tree);
             new Thread(cur).start();
@@ -140,16 +133,10 @@ class Main {
 
     private void fillMissingTrees(String... subjects) {
         for (String cur : subjects) {
-            if (decisionTreeMap.get(cur) == null) {
-                decisionTreeMap.put(cur, new DecisionTree());
-            }
+            decisionTreeMap.computeIfAbsent(cur, k -> new DecisionTree());
         }
     }
 
-
-    /**
-     *
-     */
     public void syncCurrentImage(String pathToFile, JLabel pic) {
         Runnable cur = new SynchronizerImage(pathToFile, pic);
         new Thread(cur).start();
@@ -205,7 +192,7 @@ class Main {
 
     }
 
-    private class ImageUploader implements Runnable{
+    private class ImageUploader implements Runnable {
         String localPath;
         ImageUploader(String localPath){
             this.localPath = localPath;
@@ -218,7 +205,7 @@ class Main {
                 byte[] fileContent = Files.readAllBytes(fi.toPath());
 
                 System.out.println("Opening connection for image upload..."+localPath);
-                URL uploadURL = new URL("http://moritz.liegmanns.de/leoapp_php/itbaum/uploadImage.php");
+                URL uploadURL = new URL(Start.DOMAIN_DEV + "uploadImage.php");
                 HttpURLConnection conn = (HttpURLConnection) uploadURL.openConnection();
                 conn.setDoOutput(true);
                 conn.setRequestMethod("POST");
@@ -238,8 +225,6 @@ class Main {
                     System.out.println("Image result: "+line);
 
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }

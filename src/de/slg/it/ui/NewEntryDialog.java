@@ -1,4 +1,4 @@
-package de.slg.it;
+package de.slg.it.ui;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,7 +18,7 @@ public class NewEntryDialog extends JDialog implements ActionListener {
     private JTextField answerYes;
     private JTextField yes_desc;
 
-    private GUI_project gui;
+    private GUI gui;
     private Frame fr;
     private JOptionPane optionPane;
 
@@ -35,7 +35,7 @@ public class NewEntryDialog extends JDialog implements ActionListener {
 
     private final JFileChooser fc;
 
-    public NewEntryDialog(Frame aFrame, GUI_project parent) {
+    NewEntryDialog(Frame aFrame, GUI parent) {
         super(aFrame, true);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

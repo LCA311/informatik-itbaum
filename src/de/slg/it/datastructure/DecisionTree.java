@@ -1,6 +1,5 @@
 package de.slg.it.datastructure;
 
-import de.slg.it.datastructure.BinaryTree;
 import de.slg.it.utility.ProblemContent;
 
 /**
