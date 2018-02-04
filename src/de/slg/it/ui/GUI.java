@@ -9,7 +9,6 @@ import de.slg.it.utility.Subject;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.*;
 
 
@@ -25,7 +24,6 @@ public class GUI extends JFrame {
     private JButton buttonRefresh;
     private JButton buttonAdd;
 
-    private JLabel label1;
     private JLabel label2;
 
     private JTextArea textArea;
@@ -68,7 +66,7 @@ public class GUI extends JFrame {
         button1.setVisible(false);
         button1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                yesClicked(evt);
+                yesClicked();
             }
         });
 
@@ -77,12 +75,12 @@ public class GUI extends JFrame {
         button2.setForeground(new Color(66, 143, 202));
         button2.setBackground(new Color(255, 255, 255));
         button2.setEnabled(true);
-        button2.setFont(new Font("raleway", 1, 14));
+        button2.setFont(new Font("raleway", Font.BOLD, 14));
         button2.setText("Nein");
         button2.setVisible(false);
         button2.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                noClicked(evt);
+                noClicked();
             }
         });
 
@@ -93,7 +91,7 @@ public class GUI extends JFrame {
         button3.setForeground(new Color(66, 143, 202));
         button3.setBackground(new Color(255, 255, 255));
         button3.setEnabled(true);
-        button3.setFont(new Font("raleway", 1, 14));
+        button3.setFont(new Font("raleway", Font.BOLD, 14));
         button3.setText("Netzwerk");
         button3.setVisible(true);
 
@@ -110,7 +108,7 @@ public class GUI extends JFrame {
         button4.setForeground(new Color(66, 143, 202));
         button4.setBackground(new Color(255, 255, 255));
         button4.setEnabled(true);
-        button4.setFont(new Font("raleway", 1, 14));
+        button4.setFont(new Font("raleway", Font.BOLD, 14));
         button4.setText("Computer");
         button4.setVisible(true);
 
@@ -128,7 +126,7 @@ public class GUI extends JFrame {
         button5.setForeground(new Color(66, 143, 202));
         button5.setBackground(new Color(255, 255, 255));
         button5.setEnabled(true);
-        button5.setFont(new Font("raleway", 1, 14));
+        button5.setFont(new Font("raleway", Font.BOLD, 14));
         button5.setText("Beamer");
         button5.setVisible(true);
 
@@ -145,7 +143,7 @@ public class GUI extends JFrame {
         buttonRefresh.setForeground(new Color(66, 143, 202));
         buttonRefresh.setBackground(new Color(255, 255, 255));
         buttonRefresh.setEnabled(true);
-        buttonRefresh.setFont(new Font("raleway", 1, 14));
+        buttonRefresh.setFont(new Font("raleway", Font.BOLD, 14));
         buttonRefresh.setText("Neustart");
         buttonRefresh.setVisible(false);
         buttonRefresh.addMouseListener(new MouseAdapter() {
@@ -159,7 +157,7 @@ public class GUI extends JFrame {
         buttonAdd.setForeground(new Color(66, 143, 202));
         buttonAdd.setBackground(new Color(255, 255, 255));
         buttonAdd.setEnabled(true);
-        buttonAdd.setFont(new Font("raleway", 1, 18));
+        buttonAdd.setFont(new Font("raleway", Font.BOLD, 18));
         buttonAdd.setText("+");
         buttonAdd.setVisible(false);
         buttonAdd.addMouseListener(new MouseAdapter() {
@@ -168,21 +166,21 @@ public class GUI extends JFrame {
             }
         });
 
-        label1 = new JLabel();
+        JLabel label1 = new JLabel();
         label1.setBounds(0, 0, 300, 40);
         label1.setForeground(new Color(255, 255, 255));
-        label1.setHorizontalAlignment(0);
+        label1.setHorizontalAlignment(SwingConstants.CENTER);
         label1.setEnabled(true);
-        label1.setFont(new Font("raleway", 1, 20));
+        label1.setFont(new Font("raleway", Font.BOLD, 20));
         label1.setText("IT-Problemlöser");
         label1.setVisible(true);
 
         label2 = new JLabel();
         label2.setBounds(0, 20, 300, 60);
         label2.setForeground(new Color(255, 255, 255));
-        label2.setHorizontalAlignment(0);
+        label2.setHorizontalAlignment(SwingConstants.CENTER);
         label2.setEnabled(true);
-        label2.setFont(new Font("raleway", 0, 16));
+        label2.setFont(new Font("raleway", Font.PLAIN, 16));
         label2.setText("label");
         label2.setVisible(false);
 
@@ -190,7 +188,7 @@ public class GUI extends JFrame {
         //textArea.setBounds(0, 60, 300, 60);
         textArea.setForeground(new Color(255, 255, 255));
         textArea.setEnabled(true);
-        textArea.setFont(new Font("raleway", 0, 14));
+        textArea.setFont(new Font("raleway", Font.PLAIN, 14));
         textArea.setText("label");
         textArea.setEditable(false);
 
@@ -227,7 +225,7 @@ public class GUI extends JFrame {
         this.setVisible(true);
     }
 
-    private void yesClicked(MouseEvent evt) {
+    private void yesClicked() {
         session.answerYes();
         if (session.isAnswer()) {
             reboot("Ergebniss.");
@@ -239,7 +237,7 @@ public class GUI extends JFrame {
     }
 
     //Method mouseClicked for button2
-    private void noClicked(MouseEvent evt) {
+    private void noClicked() {
         session.answerNo();
         if (session.isAnswer()) {
             reboot("Ergebniss.");
@@ -321,11 +319,11 @@ public class GUI extends JFrame {
 
     }
 
-    public void newProblem() {
+    void newProblem() {
         new NewEntryDialog(new Frame(), this);
     }
 
-    public void addTree(String q, String qDesc, String ansNo, String noDesc, String ansYe, String yesDesc, String localPath, String file) {
+    void addTree(String q, String qDesc, String ansNo, String noDesc, String ansYe, String yesDesc, String localPath, String file) {
         System.out.println("Adding tree...");
         if (!ansNo.equals("") && !noDesc.equals("")) {
             String no = ansNo + "_;_" + noDesc + "_;_null_;;_";
@@ -351,6 +349,7 @@ public class GUI extends JFrame {
                 session.setContent(new ProblemContent(q, qDesc, "null"));
                 curReference.uploadTree(session.getSubject());
             }
+
         }
     }
 }

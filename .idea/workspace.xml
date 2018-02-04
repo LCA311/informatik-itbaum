@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4761b038-ee7f-4f83-8595-fdba6ccac236" name="Default" comment="Todo : Gui scrolling and php post">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/slg/it/ui/PasswordDialog.java" afterPath="$PROJECT_DIR$/src/de/slg/it/ui/PasswordDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/slg/it/ui/GUI.java" afterPath="$PROJECT_DIR$/src/de/slg/it/ui/GUI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/slg/it/ui/NewEntryDialog.java" afterPath="$PROJECT_DIR$/src/de/slg/it/ui/NewEntryDialog.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,14 +16,15 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GUI.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/de/slg/it/ui/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="90" column="32" lean-forward="false" selection-start-line="90" selection-start-column="32" selection-end-line="90" selection-end-column="32" />
+            <state relative-caret-position="-334">
+              <caret line="185" column="0" lean-forward="true" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
               <folding>
-                <element signature="e#2461#2592#0" expanded="true" />
-                <element signature="e#2591#2592#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2402#2530#0" expanded="true" />
+                <element signature="e#2529#2530#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -46,17 +47,17 @@
       <file leaf-file-name="NewEntryDialog.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/slg/it/ui/NewEntryDialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+            <state relative-caret-position="445">
+              <caret line="91" column="0" lean-forward="false" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PasswordDialog.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PasswordDialog.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/slg/it/ui/PasswordDialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-167">
+            <state relative-caret-position="391">
               <caret line="23" column="42" lean-forward="true" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -164,13 +165,13 @@
         <option value="$PROJECT_DIR$/src/de/slg/it/utility/ProblemContent.java" />
         <option value="$PROJECT_DIR$/src/de/slg/it/GUI_project.java" />
         <option value="$PROJECT_DIR$/src/de/slg/it/ui/GUI_project.java" />
-        <option value="$PROJECT_DIR$/src/de/slg/it/ui/NewEntryDialog.java" />
-        <option value="$PROJECT_DIR$/src/de/slg/it/ui/GUI.java" />
         <option value="$PROJECT_DIR$/src/de/slg/it/Session.java" />
         <option value="$PROJECT_DIR$/src/de/slg/it/datastructure/DecisionTree.java" />
         <option value="$PROJECT_DIR$/src/de/slg/it/Start.java" />
         <option value="$PROJECT_DIR$/src/de/slg/it/Main.java" />
         <option value="$PROJECT_DIR$/src/de/slg/it/ui/PasswordDialog.java" />
+        <option value="$PROJECT_DIR$/src/de/slg/it/ui/NewEntryDialog.java" />
+        <option value="$PROJECT_DIR$/src/de/slg/it/ui/GUI.java" />
       </list>
     </option>
   </component>
@@ -655,8 +656,9 @@
         <state relative-caret-position="5134">
           <caret line="320" column="8" lean-forward="false" selection-start-line="320" selection-start-column="8" selection-end-line="320" selection-end-column="8" />
           <folding>
-            <element signature="e#2461#2592#0" expanded="true" />
-            <element signature="e#2591#2592#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2402#2530#0" expanded="true" />
+            <element signature="e#2529#2530#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -824,8 +826,9 @@
         <state relative-caret-position="170">
           <caret line="18" column="57" lean-forward="true" selection-start-line="18" selection-start-column="57" selection-end-line="18" selection-end-column="57" />
           <folding>
-            <element signature="e#2461#2592#0" expanded="true" />
-            <element signature="e#2591#2592#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2402#2530#0" expanded="true" />
+            <element signature="e#2529#2530#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -845,8 +848,9 @@
         <state relative-caret-position="2125">
           <caret line="125" column="55" lean-forward="false" selection-start-line="125" selection-start-column="55" selection-end-line="125" selection-end-column="55" />
           <folding>
-            <element signature="e#2461#2592#0" expanded="true" />
-            <element signature="e#2591#2592#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2402#2530#0" expanded="true" />
+            <element signature="e#2529#2530#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -941,8 +945,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2461#2592#0" expanded="true" />
-            <element signature="e#2591#2592#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2402#2530#0" expanded="true" />
+            <element signature="e#2529#2530#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1070,14 +1075,6 @@
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/lang/String.java" />
-    <entry file="file://$PROJECT_DIR$/src/de/slg/it/ui/NewEntryDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/slg/it/Session.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -1090,17 +1087,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/slg/it/ui/GUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="90" column="32" lean-forward="false" selection-start-line="90" selection-start-column="32" selection-end-line="90" selection-end-column="32" />
-          <folding>
-            <element signature="e#2461#2592#0" expanded="true" />
-            <element signature="e#2591#2592#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/slg/it/Start.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -1108,14 +1094,6 @@
           <folding>
             <element signature="e#176#200#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/slg/it/datastructure/BinaryTree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="59" column="9" lean-forward="false" selection-start-line="59" selection-start-column="9" selection-end-line="59" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1138,6 +1116,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/slg/it/datastructure/BinaryTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="59" column="9" lean-forward="false" selection-start-line="59" selection-start-column="9" selection-end-line="59" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/slg/it/datastructure/DecisionTree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -1148,10 +1134,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/slg/it/ui/PasswordDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-167">
+        <state relative-caret-position="391">
           <caret line="23" column="42" lean-forward="true" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/slg/it/ui/NewEntryDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="91" column="0" lean-forward="false" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/slg/it/ui/GUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-334">
+          <caret line="185" column="0" lean-forward="true" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2402#2530#0" expanded="true" />
+            <element signature="e#2529#2530#0" expanded="true" />
           </folding>
         </state>
       </provider>

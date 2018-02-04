@@ -20,16 +20,10 @@ public class NewEntryDialog extends JDialog implements ActionListener {
 
     private GUI gui;
     private Frame fr;
-    private JOptionPane optionPane;
 
     private JButton btnOK;
-    private JButton btnCN;
     private JButton addImage;
 
-    private String textQuest = "Neue Frage:";
-    private String desc = "Beschreibung: ";
-    private String textAnsNo = "Die Antwort für \"Nein\" : ";
-    private String textAnsYes = "Die Antwort für \"Ja\" : ";
     private String localPath;
     private String fileName;
 
@@ -62,17 +56,21 @@ public class NewEntryDialog extends JDialog implements ActionListener {
         btnOK.addActionListener(this);
 
 
-        btnCN = new JButton("Cancel");
+        JButton btnCN = new JButton("Cancel");
         btnCN.addActionListener(this);
 
         addImage = new JButton("Bild hinzufügen");
         addImage.addActionListener(this);
 
+        String textQuest = "Neue Frage:";
+        String desc = "Beschreibung: ";
+        String textAnsNo = "Die Antwort für \"Nein\" : ";
+        String textAnsYes = "Die Antwort für \"Ja\" : ";
         Object[] array = {textQuest, question, desc, question_desc, textAnsNo, answerNo, desc, no_desc, textAnsYes, answerYes, desc, yes_desc, addImage};
 
         Object[] options = {btnOK, btnCN};
 
-        optionPane = new JOptionPane(array, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, options, options[0]);
+        JOptionPane optionPane = new JOptionPane(array, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, options, options[0]);
 
         setContentPane(optionPane);
         setVisible(true);
@@ -91,6 +89,7 @@ public class NewEntryDialog extends JDialog implements ActionListener {
                 gui.addTree(question.getText(), question_desc.getText(), answerNo.getText(), no_desc.getText(), answerYes.getText(), yes_desc.getText(), localPath, fileName);
             }
         }
+
         if (e.getSource().equals(btnOK)) {
             System.out.println("Clicked OK.");
             if (localPath != null && fileName != null) {
