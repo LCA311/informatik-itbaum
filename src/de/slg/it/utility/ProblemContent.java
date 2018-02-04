@@ -12,8 +12,9 @@ public class ProblemContent {
         if (pathToImage != null)
             this.pathToImage = pathToImage.equals("null") ? null : pathToImage;
         else
-            this.pathToImage = pathToImage;
+            this.pathToImage = null;
     }
+
     @Override
     public String toString() {
         return title + "_;_" + description + "_;_" + pathToImage;

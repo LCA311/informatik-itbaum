@@ -1,7 +1,7 @@
 package de.slg.it.ui;
 
 import de.slg.it.Main;
-import de.slg.it.Session;
+import de.slg.it.utility.Session;
 import de.slg.it.datastructure.DecisionTree;
 import de.slg.it.utility.ProblemContent;
 import de.slg.it.utility.Subject;
@@ -261,8 +261,9 @@ public class GUI extends JFrame {
 
                 label2.setText(session.getTitle());
                 textArea.setText(session.getDescription());
+
                 if (session.getPath() != null) {
-                    curReference.syncCurrentImage("hacker-stock-photo-15.jpg", picLabel);
+                    curReference.getCurrentImageFromServer(session.getPath(), picLabel);
                     picLabel.setVisible(true);
                 }
 
@@ -341,8 +342,8 @@ public class GUI extends JFrame {
 
             if (localPath != null && file != null) {
                 System.out.println("Uploading image...");
-                curReference.uploadImage(localPath, file);
-                session.setContent(new ProblemContent(q, qDesc, file));
+                curReference.uploadImage(localPath);
+                session.setContent(new ProblemContent(q, qDesc, "data/"+file));
                 curReference.uploadTree(session.getSubject());
             } else {
                 System.out.println("No image attached...");
