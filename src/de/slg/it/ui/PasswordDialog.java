@@ -2,12 +2,13 @@ package de.slg.it.ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 class PasswordDialog extends JDialog {
 
     private JPasswordField passwordField;
-    private JButton btnOK;
-    private JButton btnC;
     private String pass;
 
     private GUI gui;
@@ -21,19 +22,32 @@ class PasswordDialog extends JDialog {
 
         gui = parent;
         pass = "Bitte Passwort eingeben.";
-        btnOK = new JButton("OK");
-        btnC = new JButton("Cancel");
+
+        JButton btnOK = new JButton("OK");
+        JButton btnC = new JButton("Cancel");
+
         passwordField = new JPasswordField();
 
         btnOK.addActionListener(e -> {
-            if ("azerty".equals(String.valueOf(passwordField.getPassword()))) {
-                gui.newProblem();
-                setVisible(false);
-                frame.dispose();
-            } else {
-                pass = "Invalid username or password";
-                optionPane.repaint();
+
+            try {
+                MessageDigest digest = MessageDigest.getInstance("MD5");
+                String hashed = bytesToHex(digest.digest(String.valueOf(passwordField.getPassword()).getBytes("UTF-8")));
+
+                if (hashed.equals("ab4f63f9ac65152575886860dde480a1")) {
+                    gui.newProblem();
+                    setVisible(false);
+                    frame.dispose();
+                    PasswordDialog.this.dispose();
+                } else {
+                    pass = "Invalid username or password";
+                    optionPane.repaint();
+                }
+
+            } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+                ex.printStackTrace();
             }
+
         });
         btnC.addActionListener(e -> {
             setVisible(false);
@@ -47,5 +61,19 @@ class PasswordDialog extends JDialog {
         setVisible(true);
     }
 
+    private String bytesToHex(byte[] bytes) {
+
+        char[] hexArray = "0123456789abcdef".toCharArray();
+        char[] hexChars = new char[bytes.length * 2];
+
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+
+        return new String(hexChars);
+
+    }
 
 }
